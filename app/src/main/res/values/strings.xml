@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">LocalWeather</string>
+
+    <string name="dialog_title_network_error">Networking error</string>
+    <string name="dialog_message_network_error">The network connection is unstable. Please try again later.</string>
+    <string name="dialog_positive_network_error" translatable="false">OK</string>
+    <string name="dialog_negative_network_error" translatable="false">Cancel</string>
+
+    <string name="recycler_view_title_local">Local</string>
+    <string name="recycler_view_title_today">Today</string>
+    <string name="recycler_view_title_tomorrow">Tomorrow</string>
+
+    <string name="dialog_connection_fail_title">Fail to Connect</string>
+    <string name="dialog_connection_fail_message">Do you try again?</string>
+    <string name="dialog_connection_fail_retry">Retry</string>
+    <string name="dialog_connection_fail_close">App Close</string>
+
+</resources>

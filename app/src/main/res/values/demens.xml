@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="main_recycler_view_margin">4dp</dimen>
+    <dimen name="main_recycler_view_local_width">56dp</dimen>
+    <dimen name="main_recycler_view_title_height">56dp</dimen>
+    <dimen name="main_recycler_view_item_height">72dp</dimen>
+    <dimen name="main_recycler_view_item_icon_width">64dp</dimen>
+    <dimen name="main_recycler_view_item_icon_height">64dp</dimen>
+
+</resources>

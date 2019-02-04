@@ -1,4 +1,4 @@
-package co.laxus.coordinates.base
+package com.daekyung.localweather.base
 
 import android.content.DialogInterface
 

@@ -1,7 +1,6 @@
 package com.daekyung.localweather.presenter.base
 
-import co.laxus.coordinates.base.BasePresenter
-import co.laxus.coordinates.base.BaseView
+import com.daekyung.localweather.base.BaseView
 
 abstract class AbstractPresenter<VIEW : BaseView> : BasePresenter<VIEW> {
 

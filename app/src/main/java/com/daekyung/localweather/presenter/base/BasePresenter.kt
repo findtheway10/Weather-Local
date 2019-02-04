@@ -1,4 +1,6 @@
-package co.laxus.coordinates.base
+package com.daekyung.localweather.presenter.base
+
+import com.daekyung.localweather.base.BaseView
 
 
 interface BasePresenter<in VIEW : BaseView> {

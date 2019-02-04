@@ -1,9 +1,9 @@
 package com.daekyung.localweather.presenter.contract
 
 import android.content.Context
-import co.laxus.coordinates.base.BasePresenter
-import co.laxus.coordinates.base.BaseView
 import com.daekyung.localweather.adapter.contract.WeatherAdapterContract
+import com.daekyung.localweather.base.BaseView
+import com.daekyung.localweather.presenter.base.BasePresenter
 import io.reactivex.disposables.CompositeDisposable
 
 interface WeatherContract {

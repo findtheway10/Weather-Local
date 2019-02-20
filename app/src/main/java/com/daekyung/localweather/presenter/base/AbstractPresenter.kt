@@ -1,7 +1,5 @@
 package com.daekyung.localweather.presenter.base
 
-import com.daekyung.localweather.base.BaseView
-
 abstract class AbstractPresenter<VIEW : BaseView> : BasePresenter<VIEW> {
 
     protected var view: VIEW? = null

@@ -17,13 +17,13 @@ import io.reactivex.schedulers.Schedulers
 
 class WeatherPresenter : AbstractPresenter<WeatherContract.View>(), WeatherContract.Presenter {
 
-    override lateinit var mView: WeatherContract.View
     override lateinit var adapterModel: WeatherAdapterContract.Model
     override lateinit var adapterView: WeatherAdapterContract.View
     override lateinit var compositeDisposable: CompositeDisposable
 
     private var isWeatherLoading: Boolean = false
     private val weatherList: ArrayList<ResponseLocationWoeid> = ArrayList()
+
 
     override fun detachView() {
         compositeDisposable.clear()
@@ -34,10 +34,8 @@ class WeatherPresenter : AbstractPresenter<WeatherContract.View>(), WeatherContr
 
         if (!isWeatherLoading) {
 
-            //loading
             isWeatherLoading = true
 
-            //clear list
             weatherList.clear()
             adapterModel.clearItem()
             adapterView.notifyAdapter()
@@ -46,19 +44,16 @@ class WeatherPresenter : AbstractPresenter<WeatherContract.View>(), WeatherContr
 
             compositeDisposable.add(
                 weather.getLocationSearch(WEATHER_KEY_WORD)
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ result ->
-
                         loadWeatherByWoeid(result)
-
                     }, { error ->
                         error.printStackTrace()
-
                         isWeatherLoading = false
-                        mView.failConnection()
-                        mView.finishProgress()
-                        mView.doRefresh(false)
+                        view?.failConnection()
+                        view?.finishProgress()
+                        view?.doRefresh(false)
                     })
             )
         }
@@ -66,7 +61,6 @@ class WeatherPresenter : AbstractPresenter<WeatherContract.View>(), WeatherContr
 
     private fun loadWeatherByWoeid(list: List<ResponseLocationSearch>) {
 
-        //merge Observable
         val mergeList: ArrayList<Observable<ResponseLocationWoeid>> = ArrayList()
         val weather = WeatherProvider.provideWeather()
         (0..(list.size - 1))
@@ -74,25 +68,25 @@ class WeatherPresenter : AbstractPresenter<WeatherContract.View>(), WeatherContr
                 mergeList.add(weather.getLocationWoeid(list[it].woeid))
             }
 
-        val mergeObservable : Observable<ResponseLocationWoeid> = Observable.merge(mergeList)
+        val mergeObservable: Observable<ResponseLocationWoeid> = Observable.merge(mergeList)
 
-        compositeDisposable.add(mergeObservable
-                .observeOn(AndroidSchedulers.mainThread())
+        compositeDisposable.add(
+            mergeObservable
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     weatherList.add(result)
                 }, { error ->
                     error.printStackTrace()
 
                     isWeatherLoading = false
-                    mView.failConnection()
-                    mView.finishProgress()
-                    mView.doRefresh(false)
+                    view?.failConnection()
+                    view?.finishProgress()
+                    view?.doRefresh(false)
                 }, {
                     weatherList.let {
                         adapterModel.addItems(it)
 
-                        //add title
                         val titleItem = ResponseLocationWoeid()
                         titleItem.recyclerViewItemType = WEATHER_VIEW_HOLDER_TITLE
                         adapterModel.addItem(0, titleItem)
@@ -100,13 +94,11 @@ class WeatherPresenter : AbstractPresenter<WeatherContract.View>(), WeatherContr
                         adapterView.notifyAdapter()
                         isWeatherLoading = false
 
-                        //view
-                        mView.doRefresh(false)
-                        mView.finishProgress()
+                        view?.doRefresh(false)
+                        view?.finishProgress()
                     }
                 })
         )
     }
-
 
 }

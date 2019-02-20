@@ -3,11 +3,12 @@ package com.daekyung.localweather.activity
 import android.content.DialogInterface
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.daekyung.localweather.R
+import com.daekyung.localweather.activity.base.BasePresenterActivity
 import com.daekyung.localweather.adapter.WeatherAdapter
-import com.daekyung.localweather.base.BaseActivity
 import com.daekyung.localweather.databinding.ActivityMainBinding
 import com.daekyung.localweather.presenter.WeatherPresenter
 import com.daekyung.localweather.presenter.contract.WeatherContract
@@ -15,12 +16,16 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity(), WeatherContract.View {
+class MainActivity : BasePresenterActivity<WeatherContract.View, WeatherContract.Presenter>(), WeatherContract.View {
 
-    private lateinit var presenter: WeatherPresenter
+    //private lateinit var presenter: WeatherPresenter
     private lateinit var adapter: WeatherAdapter
 
     private lateinit var binding: ActivityMainBinding
+
+    override fun onCreatePresenter(): WeatherPresenter {
+        return WeatherPresenter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +39,7 @@ class MainActivity : BaseActivity(), WeatherContract.View {
 
         recyclerView.layoutManager = linearLayoutManager
 
-        presenter = WeatherPresenter().apply {
-            mView = this@MainActivity
+        presenter.apply {
             compositeDisposable = CompositeDisposable()
             adapterModel = adapter
             adapterView = adapter
@@ -66,6 +70,20 @@ class MainActivity : BaseActivity(), WeatherContract.View {
             DialogInterface.OnClickListener { dialog, which ->
                 presenter.loadItem(this@MainActivity)
             })
+
+    }
+
+    private fun makeAlternativeDialog(titleResId: Int, messageResId: Int, negativeResId: Int, positiveResId: Int,
+                                      negativeListener: DialogInterface.OnClickListener,
+                                      positiveListener: DialogInterface.OnClickListener) {
+
+        val builder = AlertDialog.Builder(
+            this@MainActivity)
+        builder.setTitle(titleResId)
+        builder.setMessage(messageResId)
+        builder.setNegativeButton(negativeResId, negativeListener)
+        builder.setPositiveButton(positiveResId, positiveListener)
+        builder.show()
 
     }
 }

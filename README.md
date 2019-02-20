@@ -1,7 +1,11 @@
 # Weather-Local
-test application
+kotlin example project
 
-android, kotlin
+mvp 패턴 사용
 
-library
-retrofit2 gson rxandroid glide
+사용 라이브러리
+retrofit2, gson, rxandroid, glide
+
+날씨정보 API
+https://www.metaweather.com/api/
+참고

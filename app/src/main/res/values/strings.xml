@@ -15,4 +15,8 @@
     <string name="dialog_connection_fail_retry">Retry</string>
     <string name="dialog_connection_fail_close">App Close</string>
 
+    <string name="temp_string">°C</string>
+    <string name="humidity_string">%</string>
+    <string name="weather_icon_content_description">weather icon</string>
+
 </resources>
